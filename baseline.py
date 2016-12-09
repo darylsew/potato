@@ -21,6 +21,10 @@ def read_image(name):
 X = []
 y = []
 for i in range(1,21):
+  triangle = read_image("triangles/%d.png" % i)
+  X.append(triangle)
+  y.append(2)
+
   potato = read_image("potatoes/%d.png" % i)
   X.append(potato)
   y.append(0)
@@ -29,9 +33,6 @@ for i in range(1,21):
   X.append(star)
   y.append(1)
 
-  triangle = read_image("triangles/%d.png" % i)
-  X.append(triangle)
-  y.append(2)
   
 
 train_percentage = 0.75
@@ -45,9 +46,11 @@ y_train = y[:train_test_split]
 y_test = y[train_test_split:]
 
 clf = svm.SVC()
-clf.fit(X, y)  
+clf.fit(X_train, y_train)  
 
-#print "Predicted: ", clf.predict(X_test)
-#print "Actual: ", np.array(y_test)
+print "Predicted: ", clf.predict(X_test)
+print "Actual: ", np.array(y_test)
+#for i in range(1,4):
+#  print "Predicted: ", clf.predict([read_image("rubishes/%d.png" % i)])
 
 #print "Accuracy: ", correct / len(X_test)
