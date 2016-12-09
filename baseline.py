@@ -1,5 +1,6 @@
 from sklearn import svm
 from PIL import Image
+import numpy as np
 
 # Used this to get our images to be the same size
 # mogrify -path . -resize 16x16 -format png *.png
@@ -15,9 +16,6 @@ def read_image(name):
     for y in range(16):
       example.append(pix[x, y])
   return example
-
-
-print read_image("potatoes/1.png")
 
 
 X = []
@@ -36,14 +34,20 @@ for i in range(1,21):
   y.append(2)
   
 
+train_percentage = 0.75
+
+train_test_split = int(len(X)*train_percentage)
+X_train = X[:train_test_split]
+X_test = X[train_test_split:]
+
+train_test_split = int(len(y)*train_percentage)
+y_train = y[:train_test_split]
+y_test = y[train_test_split:]
+
 clf = svm.SVC()
 clf.fit(X, y)  
 
-maybe_potatoes = [read_image("potatoes/20.png")]
-print clf.predict(maybe_potatoes)
+#print "Predicted: ", clf.predict(X_test)
+#print "Actual: ", np.array(y_test)
 
-
-"""
-X = [[0, 0], [1, 1]]
-y = [0, 1]
-"""
+#print "Accuracy: ", correct / len(X_test)
