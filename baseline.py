@@ -19,12 +19,31 @@ def read_image(name):
 
 print read_image("potatoes/1.png")
 
-"""
-X = [[0, 0], [1, 1]]
-y = [0, 1]
+
+X = []
+y = []
+for i in range(1,21):
+  potato = read_image("potatoes/%d.png" % i)
+  X.append(potato)
+  y.append(0)
+
+  star = read_image("stars/%d.png" % i)
+  X.append(star)
+  y.append(1)
+
+  triangle = read_image("triangles/%d.png" % i)
+  X.append(triangle)
+  y.append(2)
+  
+
 clf = svm.SVC()
 clf.fit(X, y)  
 
-potato = [1, 1]
-print clf.predict([potato])
+maybe_potatoes = [read_image("potatoes/20.png")]
+print clf.predict(maybe_potatoes)
+
+
+"""
+X = [[0, 0], [1, 1]]
+y = [0, 1]
 """
