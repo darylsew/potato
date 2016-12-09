@@ -12,7 +12,7 @@ def read_image(name):
   pix = im.load()
   example = []
   for x in range(16):
-    for y in range(11):
+    for y in range(16):
       example.append(pix[x, y])
   return example
 
