@@ -3,7 +3,7 @@ from PIL import Image
 import numpy as np
 
 # Used this to get our images to be the same size
-# mogrify -path . -resize 16x16 -format png *.png
+# mogrify -path . -resize 16x16! -format png *.png
 
 def read_image(name):
   """
