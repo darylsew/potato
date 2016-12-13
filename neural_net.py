@@ -16,7 +16,8 @@ plt.rcParams['image.cmap'] = 'gray'  # use grayscale output rather than a (poten
 caffe.set_mode_cpu()
 
 model_def = caffe_root + 'examples/mnist/lenet.prototxt'
-model_weights = '/Users/daryl/potato/models/lenet_iter_10000.caffemodel'
+#model_weights = '/Users/daryl/potato/models/lenet_iter_10000.caffemodel'
+model_weights = '/Users/daryl/potato/models/realfood10000.caffemodel'
 
 net = caffe.Net(model_def,      # defines the structure of the model
                 model_weights,  # contains the trained weights
@@ -69,8 +70,8 @@ def classify(name, expected):
   output_prob = output['prob'][0]
   label = output_prob.argmax()
   #import pdb; pdb.set_trace()
-  d = {0: 'potato', 1: 'star', 2: 'triangle'}
-  print "got %s, expected %s" % (d[label], d[expected])
+  #d = {0: 'potato', 1: 'star', 2: 'triangle'}
+  print "got %s, expected %s" % (label, expected)
 
   #if label == 0:
   #  return "potato"
@@ -78,9 +79,16 @@ def classify(name, expected):
   #  return "not potato"
 
 test_images = '/Users/daryl/potato/JPG-PNG-to-MNIST-NN-Format/test-images/%d'
-for i in range(3):
+# filter out ds store
+num_classes = len([i for i in os.listdir(test_images[:-2]) if '.' not in i])
+for i in range(num_classes):
   test_image_class = test_images % i
+  count = 0
   for f in os.listdir(test_image_class):
-    if f.endswith('.png'):
+    count += 1
+    if f.lower().endswith('.jpg') or f.lower().endswith('.png'):
       classify('%s/%s' % (test_image_class, f), i)
+    if count > 5:
+      break
+
   #print "Should be not potato: ", classify('%d.jpg' % i)

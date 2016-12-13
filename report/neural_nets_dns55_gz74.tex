@@ -220,8 +220,8 @@ accuracy:  [ 0.8  1.   0. ]
 \section{Conclusion}
 
 \section{Lessons Learned}
-While the end result is lots of fun to play around with, impress friends, and so
-on, there's a lot of work that goes into training a deep neural net. We never
+While the end result is lots of fun to play around with and is rather
+impressive, there's a lot of work that goes into training a deep neural net. We never
 thought that we would spend so much time on dataset curation and pipelining; we
 thought the dataset organization and input part would be quick, and the slow
 part would be finding a network architecture that is performant. Although we
@@ -230,9 +230,46 @@ time, budgeting more time for data munging work next time we do a project like
 this would enable more exploratory data science / artificial intelligence work,
 so next time we might have time to have a bit more fun.
 
-\section{Future Work}
+If we could do this again, we'd also try to plan out some of the software design
+in advance. We made separate scripts to handle different types of
+datasets (i.e. datasets from other people, a dataset we created ourself).
+However, there were actually a lot of things in common. For example, we had a
+script to split the data we recorded into train and test and a separate script
+to convert it to MNIST, and then we had a script to split a research dataset
+into train and test and convert it to MNIST, and much of the functionality is
+shared between the two.
 
+Additionally, the process to use a different dataset with the neural network or 
+integrate a different dataset into a baseline classifier
+requires many intermediate steps, and those could be done in one step.
+
+\section{Future Work}
+We would love to try a novel network architecture and achieve better performance
+in the future. In particular, something that is inspired by the way the human
+visual system processes images of food would be interesting, and could be
+grounds for publishing a paper.
+
+On the practical side of things, some future work could be creating an ensemble
+model of classifiers that will be able to pick out typical foods in a fridge.
+As far as we can tell, there does not exist a dataset of fridge items, so we
+would have to create a large dataset of fridge items. We could then build a
+knowledge representation for recipes or attempt to use machine learning to build
+a recipe recommendation on top of that.
+
+\clearpage
 \section{Appendix}
+\subsection{Screenshots}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=15cm]{training.png}
+  \caption{Training the network on a GTX Titan X. So fast!}
+\end{figure}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=15cm]{curation_and_test.png}
+  \caption{Testing the network while waiting for shell/Python scripts to curate dataset.}
+\end{figure}
+\subsection{Code}
 Here we present an annotated listing of all of the code we wrote for this
 project. The code is also available on \href{http://github.com/darylsew/potato}{GitHub}.
 
