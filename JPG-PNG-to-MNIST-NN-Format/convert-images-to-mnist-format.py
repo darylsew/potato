@@ -15,7 +15,7 @@ for name in Names:
 	for dirname in os.listdir(name[0])[1:]: # [1:] Excludes .DS_Store from Mac OS
 		path = os.path.join(name[0],dirname)
 		for filename in os.listdir(path):
-			if filename.endswith(".png"):
+			if filename.endswith(".png") or filename.endswith(".jpg"):
 				FileList.append(os.path.join(name[0],dirname,filename))
 
 	shuffle(FileList) # Usefull for further segmenting the validation set
@@ -30,9 +30,18 @@ for name in Names:
 
 		width, height = Im.size
 
+		print "processing file: ", filename
+		print "w: ", width
+		print "h: ", height
 		for x in range(0,width):
 			for y in range(0,height):
-				data_image.append(pixel[y,x])
+				pxl = None
+				if type(pixel[y,x]) != int:
+					pxl = int(sum(pixel[y,x]) / 3.0)
+				else:
+					pxl = pixel[y,x]
+				print "pixel: ", pxl
+				data_image.append(pxl)
 
 		data_label.append(label) # labels start (one unsigned byte each)
 
