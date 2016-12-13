@@ -148,6 +148,13 @@ the binary format that LeNet expects.
 \subsection{Data Collection Process}
 TODO
 
+\subsection{Logistics}
+Training for the SVM was done on a 2015 Macbook Pro, and took a trivial ($<5$s)
+amount of time.
+Training for the neural network was done on an Nvidia GTX Titan.
+The KNN model we used does not require an extensive training period as we
+compute distances when requested.
+
 \subsection{Theory}
 \subsubsection{K Nearest Neighbors}
 how does it work
@@ -164,7 +171,7 @@ We created the following network visualization via Caffe's
   \includegraphics[width=\textwidth]{lenet.png}
 \end{figure}
 \subsubsection{Cross Validation}
-talk about train test split
+talk about train test split and why it's needed
 \section{Evaluation}
 For evaluating performance, we decided to focus on multiclass precision-recall
 curves, as they are a fairly holistic method of evaluating classifier
@@ -212,6 +219,17 @@ accuracy:  [ 0.8  1.   0. ]
 
 \section{Conclusion}
 
+\section{Lessons Learned}
+While the end result is lots of fun to play around with, impress friends, and so
+on, there's a lot of work that goes into training a deep neural net. We never
+thought that we would spend so much time on dataset curation and pipelining; we
+thought the dataset organization and input part would be quick, and the slow
+part would be finding a network architecture that is performant. Although we
+didn't end up having much time to explore different network architectures this
+time, budgeting more time for data munging work next time we do a project like
+this would enable more exploratory data science / artificial intelligence work,
+so next time we might have time to have a bit more fun.
+
 \section{Future Work}
 
 \section{Appendix}
@@ -255,6 +273,9 @@ Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
    Y. LeCun, L. D. Jackel, B. Boser, J. S. Denker, H. P. Graf, I. Guyon, D.
    Henderson, R. E. Howard, and W. Hubbard. \textit{Handwritten digit
    recognition: Applications of neural net chips and automatic learning.} IEEE Communication, pages 41-46, November 1989. invited paper.
+
+\bibitem{Food Dataset}
+ \url{http://www.site.uottawa.ca/~shervin/pubs/FoodRecognitionDataset-MadiMa.pdf}
 \end{thebibliography}
 
 \end{document}
