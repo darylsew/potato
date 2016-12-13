@@ -1,4 +1,3 @@
-#!/usr/bin/env python
 """
 Draw a graph of the net architecture.
 """
@@ -50,8 +49,7 @@ def main():
         phase = caffe.TEST
     elif args.phase != "ALL":
         raise ValueError("Unknown phase: " + args.phase)
-    caffe.draw.draw_net_to_file(net, args.output_image_file, args.rankdir,
-                                phase)
+    caffe.draw.draw_net_to_file(net, args.output_image_file, args.rankdir)
 
 
 if __name__ == '__main__':

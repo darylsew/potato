@@ -155,11 +155,14 @@ how does it work
 how does it work
 \subsubsection{Convolutional Neural Network (LeNet)}
 how does it work
+
+We created the following network visualization via Caffe's
+\texttt{draw\_net.py}.
+ TODO split up image
 \begin{figure}[h!]
   \centering
-  \includegraphics[width=\textwidth]{caffe.png}
+  \includegraphics[width=\textwidth]{lenet.png}
 \end{figure}
-TODO LeNet architecture visualization
 \subsubsection{Cross Validation}
 talk about train test split
 \section{Evaluation}
@@ -194,7 +197,8 @@ five point star.
   \centering
   \includegraphics[width=15cm]{svm_pr_hand.png}
 \end{figure}
-(trained on 20 images)
+(trained on 20 16x16 images; if time redo on 40 28x28 images. there seems to be
+a bug rn)
 classes correct:  [4.0, 3.0, 0.0]
 total:  [5, 3, 7]
 accuracy:  [ 0.8  1.   0. ]
