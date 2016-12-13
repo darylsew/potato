@@ -1,0 +1,216 @@
+\documentclass[leqno]{article}
+\usepackage[top=1.2in, bottom=1in, left=1.5in, right=1.5in]{geometry}
+\usepackage{tikz}
+\usetikzlibrary{shapes.multipart}
+\usepackage{amsmath,amssymb,amsthm,gensymb,mathtools,xfrac,array}
+\usepackage{paralist, enumerate, multicol}
+\usepackage{caption, subcaption}
+\usepackage{float}
+\usepackage{siunitx}
+\usepackage{tabularx, booktabs}
+\usepackage{parskip}
+\usepackage{listings}
+\usepackage{chngpage}
+\usepackage[colorlinks=true,
+  linkcolor=blue,
+  urlcolor=blue,
+  citecolor=blue,
+anchorcolor=blue]{hyperref}
+
+\lstset{language=C,
+  frame=single,
+  breaklines=true,
+  basicstyle=\ttfamily\footnotesize,
+  keywordstyle=\color{blue}\ttfamily,
+  stringstyle=\color{red}\ttfamily,
+  commentstyle=\color{gray}\ttfamily%,
+  %morecomment=[l][\color{magenta}]{\#}
+}
+
+\newcommand{\HRule}{\rule{\linewidth}{0.5mm}}
+
+\begin{document}
+
+\begin{titlepage}
+\begin{center}
+
+\textsc{\LARGE Cornell University}\\[1.5cm]
+
+\textsc{\Large CS 4701: Practicum in Artificial Intelligence}\\[0.5cm]
+
+% Title
+\HRule \\[0.4cm]
+{ \huge \bfseries Food Recognition with Deep Learning \\[0.4cm] }
+
+\HRule \\[1.5cm]
+
+% Author and supervisor
+\begin{minipage}{0.4\textwidth}
+\begin{flushleft} \large
+Daryl Sew (dns55) \\
+Cornell Computer Science '17 \\
+darylsew@gmail.com \\
+\vspace{0.5cm}
+Alice Zhang (gz74) \\
+Cornell Computer Science '17
+gz74@cornell.edu \\
+\vspace{0.5cm}
+Instructor, Bart Selman (bs54)\\
+\end{flushleft}
+\end{minipage}
+
+\vspace{1cm}
+
+%TODO replace image here
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{caffe.png}
+\end{figure}
+
+\vfill
+
+% Bottom of the page
+{\large December \oldstylenums{13}, \oldstylenums{2016}}
+
+\end{center}
+
+\end{titlepage}
+
+\section{Problem Description}
+Consider the problem of creating an artificially intelligent grocery shopper who
+is able to make recipe substitutions and suggestions based on availability. Such
+an agent would be highly desirable to anyone who would rather do something else
+with their time than shop for groceries, and the different intelligent
+components that go into this agent would have widespread applications in other
+fields.
+
+Recent advances in machine learning algorithms and computing capabilities have
+enabled deep neural network architectures to surpass the state of the art
+traditional machine learning classifiers in nearly every problem domain. In
+particular, Convolutional Neural Networks have surpassed traditional computer
+vision and machine learning techniques in many tasks, provided with large
+amounts of data.
+
+Inspired in part by the textbook grocery shopper example and in part by
+\href{https://www.wired.com/2014/06/how-ibms-watson-will-make-your-meals-tastier/}{IBM's
+work in recipe recommendation with Watson}, we decided to build the perception
+system for food recognition, using deep learning methods in order to achieve the best
+possible performance. The ability to recognize a food item in an image has
+countless applications; for example, it is useful
+in building cooking roobts, creating an artificially intelligent grocery
+shopper, automatically tracking shopper actions (i.e. Amazon Go), diet tracking
+programs, and many more.
+
+\section{High Level Design}
+\subsection{Approach}
+Our first attempt to train our network on resulted in very poor ($<5\%$)
+accuracy, so we decided to break the problem down into more manageable chunks.
+
+We picked K Nearest Neighbors and Support Vector Machines as baseline classifiers 
+so we would be able to meaningfully evaluate the Deep Convolutional Neural
+Network's performance. If we are using CNNs effectively, we should see much
+better results compared to the baseline. We used the LeNet network, as it is one
+of the most widely studied and well understood network architectures in the
+field, so we knew it would be fairly easy to work with.
+
+We started with using the baseline classifiers to classify several types of hand drawn shapes 
+with no feature extraction, mimicking the MNIST dataset. We simply used the
+grayscale pixel values of an image as the feature vector. We then trained the
+CNN on these, evaluated the performance, and compared the results.
+
+\subsection{Theory}
+\subsubsection{K Nearest Neighbors}
+how does it work
+\subsubsection{Support Vector Machine}
+how does it work
+\subsubsection{Convolutional Neural Network (LeNet)}
+how does it work
+TODO LeNet architecture visualization
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{caffe.png}
+\end{figure}
+
+\subsection{Software Architecture}
+\subsubsection{\texttt{potato.py}}
+Loads model weights for a convolutional neural network and feeds
+forward test inputs through the network, evaluating its performance. The network
+we used was the off the shelf LeNet.
+\subsubsection{\texttt{knn.py}}
+Evaluates the K Nearest Neighbors classifier on test inputs. Experiments with
+thresholding and corner detection as feature extractors. We chose to implement
+this ourselves as we thought it would be a valuable exercise. However we did not
+implement other classifiers ourselves due to time constraints.
+TODO specify more
+\subsubsection{\texttt{svm.py}}
+Evaluates the Support Vector Machine classifier on test inputs. Uses the
+Scikit-Learn multiclass SVM. 
+
+
+\section{Evaluation}
+For evaluating performance, we decided to focus on multiclass precision-recall
+curves, as they are a fairly holistic method of evaluating classifier
+performance, and the area under the curve is a simple metric to optimize.
+
+We are not in a position where false positives or false negatives
+have different desirabilities, either, so no modification or special analyses
+are required.
+
+\subsection{Hand Drawn Data}
+\subsubsection{K Nearest Neighbors}
+\subsubsection{Support Vector Machine}
+\subsubsection{Convolutional Neural Network}
+
+\subsection{Food Dataset}
+\subsubsection{K Nearest Neighbors}
+\subsubsection{Support Vector Machine}
+\subsubsection{Convolutional Neural Network}
+
+\section{Conclusion}
+
+\section{Future Work}
+
+\section{Appendix}
+Here we present an annotated listing of all of the code we wrote for this
+project. The code is also available on \href{http://github.com/darylsew/potato}{GitHub}.
+
+\section{Permissions}
+Our code is under the Apache license; see
+\href{http://github.com/darylsew/potato}{GitHub} for more details.
+
+If you found our work helpful in your research, we would appreciate it if you could consider
+listing us as authors. Feel free to contact us.
+
+\section{Credits}
+Thanks to the Cornell Graphics and Vision lab for donating a tiny amount of GPU
+power for us to train our network. We did not have access to Nvidia GPUs, so we
+would have had to spend orders of magnitude more time training on CPUs
+otherwise.
+
+Thanks to
+\href{https://github.com/gskielian/JPG-PNG-to-MNIST-NN-Format/blob/master/LICENSE}{gkielian}
+for the script we used to convert our PNG images into the custom binary format
+the LeNet expects.
+
+\begin{thebibliography}{9}
+\bibitem{jia2014caffe}
+Jia, Yangqing, Evan Shelhamer, Jeff Donahue, Sergey Karayev, Jonathan Long, Ross Girshick, Sergio Guadarrama, and Trevor Darrell.
+\textit{Caffe: Convolutional Architecture for Fast Feature Embedding}.
+arXiv preprint arXiv:1408.5093, 2014.
+
+
+\bibitem{scikit-learn}
+Pedregosa, F. and Varoquaux, G. and Gramfort, A. and Michel, V.
+         and Thirion, B. and Grisel, O. and Blondel, M. and Prettenhofer, P.
+         and Weiss, R. and Dubourg, V. and Vanderplas, J. and Passos, A. and
+         Cournapeau, D. and Brucher, M. and Perrot, M. and Duchesnay, E.
+         \textit{Scikit-learn: Machine Learning in Python}. Journal of Machine
+         Learning Research 12.2825-2830, 2011.
+
+\bibitem{LeNet}
+   Y. LeCun, L. D. Jackel, B. Boser, J. S. Denker, H. P. Graf, I. Guyon, D.
+   Henderson, R. E. Howard, and W. Hubbard. \textit{Handwritten digit
+   recognition: Applications of neural net chips and automatic learning.} IEEE Communication, pages 41-46, November 1989. invited paper.
+\end{thebibliography}
+
+\end{document}

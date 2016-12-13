@@ -69,8 +69,8 @@ def classify(name, expected):
   output_prob = output['prob'][0]
   label = output_prob.argmax()
   #import pdb; pdb.set_trace()
-  print "label: ", label
-  print "expected: ", expected
+  d = {0: 'potato', 1: 'star', 2: 'triangle'}
+  print "got %s, expected %s" % (d[label], d[expected])
 
   #if label == 0:
   #  return "potato"
