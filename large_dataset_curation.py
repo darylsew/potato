@@ -8,6 +8,9 @@ root = 'Dataset'
 #destination top level directory
 dst_tld = 'JPG-PNG-to-MNIST-NN-Format'
 
+os.system("mkdir %s/training-images/" % dst_tld)
+os.system("mkdir %s/test-images/" % dst_tld)
+
 split = 0.75
 classes = len(os.listdir(root))
 
