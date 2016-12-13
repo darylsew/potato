@@ -31,7 +31,7 @@ net = caffe.Net(model_def,      # defines the structure of the model
 transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
 #transformer.set_transpose('data', (2,0,1))  # move image channels to outermost dimension
 #transformer.set_mean('data', mu)            # subtract the dataset-mean value in each channel
-#transformer.set_raw_scale('data', 255)      # rescale from [0, 1] to [0, 255]
+transformer.set_raw_scale('data', 255)      # rescale from [0, 1] to [0, 255]
 #transformer.set_channel_swap('data', (2,1,0))  # swap channels from RGB to BGR
 
 # set the size of the input (we can skip this if we're happy
@@ -41,7 +41,7 @@ net.blobs['data'].reshape(1,        # batch size
                          28, 28)  # image size is 28x28
 
 
-def classify(name):
+def classify(name, expected):
   image = caffe.io.load_image(name)
   image = transformer.preprocess('data', image)
   #import pdb; pdb.set_trace()
@@ -70,14 +70,17 @@ def classify(name):
   label = output_prob.argmax()
   #import pdb; pdb.set_trace()
   print "label: ", label
+  print "expected: ", expected
 
   #if label == 0:
   #  return "potato"
   #else:
   #  return "not potato"
 
-test_images = '/Users/daryl/potato/JPG-PNG-to-MNIST-NN-Format/training-images/0'
-for f in os.listdir(test_images):
-  if f.endswith('.png'):
-    classify('%s/%s' % (test_images, f))
+test_images = '/Users/daryl/potato/JPG-PNG-to-MNIST-NN-Format/test-images/%d'
+for i in range(3):
+  test_image_class = test_images % i
+  for f in os.listdir(test_image_class):
+    if f.endswith('.png'):
+      classify('%s/%s' % (test_image_class, f), i)
   #print "Should be not potato: ", classify('%d.jpg' % i)
