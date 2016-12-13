@@ -16,7 +16,8 @@ plt.rcParams['image.cmap'] = 'gray'  # use grayscale output rather than a (poten
 caffe.set_mode_cpu()
 
 model_def = caffe_root + 'examples/mnist/lenet.prototxt'
-model_weights = '/Users/daryl/potato/models/lenet_iter_10000.caffemodel'
+#model_weights = '/Users/daryl/potato/models/lenet_iter_10000.caffemodel'
+model_weights = '/Users/daryl/potato/models/realfood10000.caffemodel'
 
 net = caffe.Net(model_def,      # defines the structure of the model
                 model_weights,  # contains the trained weights
@@ -41,7 +42,7 @@ net.blobs['data'].reshape(1,        # batch size
                          28, 28)  # image size is 28x28
 
 
-def classify(name, expected):
+def classify(name, expected, speak=False):
   image = caffe.io.load_image(name)
   image = transformer.preprocess('data', image)
   #import pdb; pdb.set_trace()
@@ -69,18 +70,60 @@ def classify(name, expected):
   output_prob = output['prob'][0]
   label = output_prob.argmax()
   #import pdb; pdb.set_trace()
-  d = {0: 'potato', 1: 'star', 2: 'triangle'}
-  print "got %s, expected %s" % (d[label], d[expected])
+  #d = {0: 'potato', 1: 'star', 2: 'triangle'}
+  d = {0: 'nothing', 1: 'apple', 2: 'banana', 3: 'bread', 4: 'carrot', 5: 'cheese', 6:
+      'grape', 7: 'orange', 8: 'sauce', 9: 'tomato'}
+  #print "got %s, expected %s" % (d[label], expected)
+  #print d[label]
+  if speak:
+    #import pdb; pdb.set_trace()
+    os.system("say %s" % d[label])
 
   #if label == 0:
   #  return "potato"
   #else:
   #  return "not potato"
 
-test_images = '/Users/daryl/potato/JPG-PNG-to-MNIST-NN-Format/test-images/%d'
-for i in range(3):
-  test_image_class = test_images % i
-  for f in os.listdir(test_image_class):
-    if f.endswith('.png'):
-      classify('%s/%s' % (test_image_class, f), i)
-  #print "Should be not potato: ", classify('%d.jpg' % i)
+webcam = True
+
+if not webcam:
+  test_images = '/Users/daryl/potato/JPG-PNG-to-MNIST-NN-Format/test-images/%d'
+  # filter out ds store
+  num_classes = len([i for i in os.listdir(test_images[:-2]) if '.' not in i])
+  for i in range(num_classes):
+    test_image_class = test_images % i
+    count = 0
+    for f in os.listdir(test_image_class):
+      count += 1
+      if f.lower().endswith('.jpg') or f.lower().endswith('.png'):
+        classify('%s/%s' % (test_image_class, f), i)
+      if count > 5:
+        break
+    #print "Should be not potato: ", classify('%d.jpg' % i)
+else:
+  import cv2
+  vc = cv2.VideoCapture(0)
+  cv2.namedWindow("preview")
+  if vc.isOpened(): # try to get the first frame
+      rval, frame = vc.read()
+      #import pdb; pdb.set_trace()
+  else:
+      rval = False
+  count = 0
+  while rval:
+    cv2.imshow("preview", frame)
+    count += 1
+    cv2.imwrite('./test.png', frame)
+    os.system("convert test.png -resize 28x28! test_resized.png")
+    if count % 7 == 0:
+      classify('test_resized.png', 1, speak=True)
+    else:
+      classify('test_resized.png', 1)
+
+    rval, frame = vc.read()
+    key = cv2.waitKey(20)
+    if key == 27: # exit on ESC
+        break
+  
+
+  
