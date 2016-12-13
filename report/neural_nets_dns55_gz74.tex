@@ -2,7 +2,7 @@
 \usepackage[top=1.2in, bottom=1in, left=1.5in, right=1.5in]{geometry}
 \usepackage{tikz}
 \usetikzlibrary{shapes.multipart}
-\usepackage{amsmath,amssymb,amsthm,gensymb,mathtools,xfrac,array}
+\usepackage{amsmath,amssymb,amsthm,gensymb,mathtools,xfrac}
 \usepackage{paralist, enumerate, multicol}
 \usepackage{caption, subcaption}
 \usepackage{float}
@@ -97,7 +97,7 @@ work in recipe recommendation with Watson}, we decided to build the perception
 system for food recognition, using deep learning methods in order to achieve the best
 possible performance. The ability to recognize a food item in an image has
 countless applications; for example, it is useful
-in building cooking roobts, creating an artificially intelligent grocery
+in building cooking robots, creating an artificially intelligent grocery
 shopper, automatically tracking shopper actions (i.e. Amazon Go), diet tracking
 programs, and many more.
 
@@ -110,7 +110,7 @@ We picked K Nearest Neighbors and Support Vector Machines as baseline classifier
 so we would be able to meaningfully evaluate the Deep Convolutional Neural
 Network's performance. If we are using CNNs effectively, we should see much
 better results compared to the baseline. We used the LeNet network, as it is one
-of the most widely studied and well understood network architectures in the
+of the most widely studied and used network architectures in the
 field, so we knew it would be fairly easy to work with.
 
 We started with using the baseline classifiers to classify several types of hand drawn shapes 
@@ -118,18 +118,13 @@ with no feature extraction, mimicking the MNIST dataset. We simply used the
 grayscale pixel values of an image as the feature vector. We then trained the
 CNN on these, evaluated the performance, and compared the results.
 
-\subsection{Theory}
-\subsubsection{K Nearest Neighbors}
-how does it work
-\subsubsection{Support Vector Machine}
-how does it work
-\subsubsection{Convolutional Neural Network (LeNet)}
-how does it work
-TODO LeNet architecture visualization
-\begin{figure}[h!]
-  \centering
-  \includegraphics[width=\textwidth]{caffe.png}
-\end{figure}
+After this, we tried using manual feature extraction via corner detection to
+improve the performance of KNN and SVMs, and tuning network parameters to
+improve the performance of CNNs.
+
+Once we had completed these sanity checks, we moved on to testing with real
+datasets. We picked a dataset.
+
 
 \subsection{Software Architecture}
 \subsubsection{\texttt{potato.py}}
@@ -140,25 +135,70 @@ we used was the off the shelf LeNet.
 Evaluates the K Nearest Neighbors classifier on test inputs. Experiments with
 thresholding and corner detection as feature extractors. We chose to implement
 this ourselves as we thought it would be a valuable exercise. However we did not
-implement other classifiers ourselves due to time constraints.
-TODO specify more
+implement other classifiers ourselves due to time constraints. 
+
 \subsubsection{\texttt{svm.py}}
 Evaluates the Support Vector Machine classifier on test inputs. Uses the
-Scikit-Learn multiclass SVM. 
+Scikit-Learn multiclass SVM with a Radial Basis Function kernel, which allows
+the SVM to make nonlinear decision boundaries and thus classify data that is not linearly separable.
+\subsubsection{\texttt{train\_test\_split.py}}
+Splits data into train and test data, using a library function to convert it to
+the binary format that LeNet expects. 
 
+\subsection{Data Collection Process}
+TODO
 
+\subsection{Theory}
+\subsubsection{K Nearest Neighbors}
+how does it work
+\subsubsection{Support Vector Machine}
+how does it work
+\subsubsection{Convolutional Neural Network (LeNet)}
+how does it work
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=\textwidth]{caffe.png}
+\end{figure}
+TODO LeNet architecture visualization
+\subsubsection{Cross Validation}
+talk about train test split
 \section{Evaluation}
 For evaluating performance, we decided to focus on multiclass precision-recall
 curves, as they are a fairly holistic method of evaluating classifier
-performance, and the area under the curve is a simple metric to optimize.
+performance. The area under the curve is a simple metric to optimize, and the
+curve itself effectively characterizes classifier performance in different
+situations.
 
 We are not in a position where false positives or false negatives
 have different desirabilities, either, so no modification or special analyses
 are required.
 
 \subsection{Hand Drawn Data}
+The following are sample images from the three classes of hand drawn images we evaluated. The network
+scales the inputs to 28x28, so we present the images after scaling below. Resizing was done via the UNIX \texttt{convert} command line tool.
+
+The left image is a potato. The right image is a triangle. The lower image is a
+five point star.
+
+
+\strut
+\noindent\null\hfill
+\includegraphics[width=5cm]{potato.png} \hfill
+\includegraphics[width=5cm]{triangle.png} \hfill\null
+
+\noindent\null\hfill\includegraphics[width=5cm]{star.png} \hfill
+
 \subsubsection{K Nearest Neighbors}
 \subsubsection{Support Vector Machine}
+\begin{figure}[h!]
+  \centering
+  \includegraphics[width=15cm]{svm_pr_hand.png}
+\end{figure}
+(trained on 20 images)
+classes correct:  [4.0, 3.0, 0.0]
+total:  [5, 3, 7]
+accuracy:  [ 0.8  1.   0. ]
+
 \subsubsection{Convolutional Neural Network}
 
 \subsection{Food Dataset}
